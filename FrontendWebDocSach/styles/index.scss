@@ -1,0 +1,17 @@
+@import './variables.scss';
+
+.navbar {
+    .container {
+        width: $width-auto;
+    }
+}
+
+.back-ground {
+    .container {
+        width: $width-auto;
+
+        .nav {
+            justify-content: center;
+        }
+    }
+}
