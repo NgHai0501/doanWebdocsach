@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+#    hibernate:
+#      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+server:
+  port: 5000
+  servlet:
+    context-path: /api
+
+
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG            # Hiển thị câu SQL
+    org.hibernate.type.descriptor.sql: TRACE  # Hiển thị dữ liệu truyền vào các câu SQL (binding parameter)
+    org.springframework: DEBUG          # Hiển thị log chi tiết của Spring framework
+    com.example.WebsiteReadingBook: DEBUG # Hiển thị log chi tiết trong package của bạn
