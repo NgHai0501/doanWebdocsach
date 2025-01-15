@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: doan-frontend
+  name: doan-frontend-deployment
+  namespace: doan
+spec:
+  replicas: 2
+  revisionHistoryLimit: 11
+  selector:
+    matchLabels:
+      app: doan-frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: doan-frontend
+      namespace: doan
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: doan-frontend-configmap
+          image: hainh0110/doan_frontend:v1.1
+          imagePullPolicy: Always
+          name: doan-frontend
+          ports:
+            - containerPort: 3000
+              name: tcp
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: doan-frontend-service
+  namespace: doan
+spec:
+  ports:
+    - name: tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: doan-frontend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: doan-frontend-ingress
+  namespace: doan
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: 
+      http:
+        paths:
+          - backend:
+              service:
+                name: doan-frontend-service
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix

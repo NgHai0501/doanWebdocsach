@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: doan-frontend-configmap
+  namespace: doan
+data:
+  VITE_URL_BACKEND: http://35.194.126.74/api
